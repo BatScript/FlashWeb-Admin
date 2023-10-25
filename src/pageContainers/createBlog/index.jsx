@@ -1,7 +1,13 @@
+import { BlockNoteView, useBlockNote } from '@blocknote/react'
 import Layout from '../../components/layout'
 
 const CreateBlog = () => {
-  return <Layout>CreateBlog</Layout>
+  const editor = useBlockNote({})
+  return (
+    <Layout>
+      <BlockNoteView className='w-2/3 ml-auto' editor={editor} theme="light" />
+    </Layout>
+  )
 }
 
 export default CreateBlog
