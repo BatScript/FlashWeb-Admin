@@ -11,7 +11,7 @@ function App() {
       accentColor="blue"
       grayColor="sand"
       radius="large"
-      scaling="95%"
+      scaling="110%"
       className="h-full"
     >
       <RouterProvider router={createBrowserRouter(routerConfig)}>
