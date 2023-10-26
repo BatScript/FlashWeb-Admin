@@ -1,7 +1,7 @@
 import { Badge, Box, TextFieldInput, TextFieldRoot } from '@radix-ui/themes'
 import { useState } from 'react'
 
-const TabInput = ({ value }) => {
+const TabInput = ({ onChange, name }) => {
   const [keywords, setKeyWords] = useState([])
 
   const handleKeyDown = (e) => {
@@ -12,6 +12,7 @@ const TabInput = ({ value }) => {
 
   const addKeyWord = (val) => {
     setKeyWords((prev) => [...prev, val])
+    onChange({ [name]: keywords })
   }
   return (
     <div className="rounded border-2 p-4" value={keywords}>

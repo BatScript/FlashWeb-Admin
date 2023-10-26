@@ -1,51 +1,46 @@
-import { BlockNoteView, useBlockNote } from '@blocknote/react'
+import { Button, Text } from '@radix-ui/themes'
 import Layout from '../../components/layout'
-import { theme } from './config/blockNoteConfig'
-import '@blocknote/core/style.css'
-import {
-  Badge,
-  Box,
-  Text,
-  TextArea,
-  TextFieldInput,
-  TextFieldRoot
-} from '@radix-ui/themes'
-import TabInput from '../../components/ui/tabInput'
+import FormInput from '../../components/ui/formInput'
+import { formSections } from './config/formFields'
+import React, { useState } from 'react'
 
 const CreateBlog = () => {
-  const editor = useBlockNote({})
+  const [formValue, setFormValue] = useState([])
+  const handleFormChange = (e, valObj) => {
+    setFormValue((prev) => ({ ...prev, ...valObj }))
+  }
+  const handleFormSubmit = () => {
+    console.log(formValue)
+  }
   return (
     <Layout>
-      <form className="flex flex-col gap-y-4 w-11/12 mx-auto">
-        <Text weight="800">Meta Data for SEO</Text>
-        <TextFieldInput
-          color="blue"
-          variant="soft"
-          placeholder="Enter title of Blog"
-        />
-        <TextArea
-          color="blue"
-          variant="soft"
-          placeholder="Enter description of Blog..."
-        />
-        <TextFieldInput
-          color="blue"
-          variant="soft"
-          placeholder="Cover Image URL..."
-        />
-        <TextFieldInput
-          color="blue"
-          variant="soft"
-          placeholder="Canonical URL..."
-        />
-        <TabInput />
-        <Text>Start Writing Your Blog...</Text>
-        <BlockNoteView
-          placeholder="Enter text or type / for commands"
-          className=" "
-          editor={editor}
-          theme={theme}
-        />
+      <form
+        className="flex flex-col gap-y-4 w-11/12 mx-auto"
+        onSubmit={handleFormSubmit}
+      >
+        {formSections.map((section, index) => {
+          const { title, config } = section
+          return (
+            <React.Fragment key={index}>
+              <Text>{title}</Text>
+              {config.map((ele, index) => {
+                const { type, placeHolder, keyName } = ele
+                return (
+                  <FormInput
+                    type={type}
+                    placeholder={placeHolder}
+                    key={index}
+                    name={keyName}
+                    onChange={handleFormChange}
+                  />
+                )
+              })}
+            </React.Fragment>
+          )
+        })}
+        <Button type="submit" variant="outline">
+          Submit
+        </Button>
       </form>
     </Layout>
   )
