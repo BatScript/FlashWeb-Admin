@@ -13,6 +13,7 @@
     "@blocknote/core": "^0.9.5",
     "@blocknote/react": "^0.9.5",
     "@radix-ui/themes": "^2.0.0",
+    "@react-oauth/google": "^0.11.1",
     "@reduxjs/toolkit": "^1.9.7",
     "install": "^0.13.0",
     "npm": "^10.2.1",

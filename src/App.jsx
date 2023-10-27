@@ -15,7 +15,6 @@ function App() {
       className="h-full"
     >
       <RouterProvider router={createBrowserRouter(routerConfig)}>
-        <Layout>Hello World</Layout>
         <ThemePanel />
       </RouterProvider>
     </Theme>

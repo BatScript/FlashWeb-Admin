@@ -1,28 +1,15 @@
 import { TextArea, TextFieldInput } from '@radix-ui/themes'
 import TabInput from '../tabInput'
 import '@blocknote/core/style.css'
-import { BlockNoteView, useBlockNote } from '@blocknote/react'
-import { theme } from '../../../pageContainers/createBlog/config/blockNoteConfig'
+import TextEditor from '../textEditor'
 
 const FormInput = ({ type, name, onChange, placeholder }) => {
-  const editor = useBlockNote({
-    // Listens for when the editor's contents change.
-    onEditorContentChange: (editor) => {
-      // Converts the editor's contents from Block objects to Markdown and
-      // saves them.
-      const saveBlocksAsMarkdown = async () => {
-        const markdown = await editor.blocksToMarkdown(editor.topLevelBlocks)
-        onChange({})
-      }
-      saveBlocksAsMarkdown()
-    }
-  })
   switch (type) {
     case 'textField':
       return (
         <TextFieldInput
           name={name}
-          onChange={(e) => onChange(e, { [name]: e.target.value })}
+          onChange={(e) => onChange({ [name]: e.target.value })}
           color="blue"
           variant="soft"
           placeholder={placeholder}
@@ -32,29 +19,29 @@ const FormInput = ({ type, name, onChange, placeholder }) => {
       return (
         <TextArea
           name={name}
-          onChange={(e) => onChange(e, { [name]: e.target.value })}
+          onChange={(e) => onChange({ [name]: e.target.value })}
           color="blue"
           variant="soft"
           placeholder={placeholder}
         />
       )
     case 'tabInput':
-      return <TabInput name={name} onChange={(val) => onChange(val)} />
+      return (
+        <TabInput
+          placeholder={placeholder}
+          name={name}
+          onChange={(val) => onChange({ [name]: val })}
+        />
+      )
     case 'blockNote':
       return (
-        <BlockNoteView
-          placeholder={placeholder}
-          className=""
-          editor={editor}
-          theme={theme}
-          onChange={(val) => console.log(val)}
-        />
+        <TextEditor name={name} onChange={(val) => onChange({ [name]: val })} />
       )
     default:
       return (
         <TextFieldInput
           name={name}
-          onChange={(e) => onChange(e, { [name]: e.target.value })}
+          onChange={(e) => onChange({ [name]: e.target.value })}
           color="blue"
           variant="soft"
           placeholder={placeholder}

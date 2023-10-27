@@ -1,33 +1,50 @@
 import { Badge, Box, TextFieldInput, TextFieldRoot } from '@radix-ui/themes'
 import { useState } from 'react'
 
-const TabInput = ({ onChange, name }) => {
-  const [keywords, setKeyWords] = useState([])
+const TabInput = ({ onChange, placeholder }) => {
+  const [keywords, setKeywords] = useState([])
+  const [txtInput, setTxtInput] = useState()
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault()
       addKeyWord(e.target.value)
+      setTxtInput('')
     }
   }
 
   const addKeyWord = (val) => {
-    setKeyWords((prev) => [...prev, val])
-    onChange({ [name]: keywords })
+    setKeywords([...keywords, val])
+    onChange([...keywords, val])
   }
-  return (
-    <div className="rounded border-2 p-4" value={keywords}>
+
+  const Badges = ({ badges }) => {
+    return (
       <Box className="flex gap-x-2 mb-2">
-        <Badge size="1" color="indigo">
-          New
-        </Badge>
-        <Badge size="1" color="indigo">
-          Old
-        </Badge>
+        {badges.map((ele, index) => {
+          return (
+            <Badge key={index} size="1" color="indigo">
+              {ele}
+            </Badge>
+          )
+        })}
       </Box>
+    )
+  }
+
+  return (
+    <div
+      className={`rounded ${keywords.length > 0 ? 'border-2 p-4' : null}`}
+      value={keywords}
+    >
+      <Badges badges={keywords} />
       <TextFieldRoot>
         <TextFieldInput
+          enterKeyHint="gaand"
           onKeyDown={handleKeyDown}
-          placeholder="Enter Keywords For Blogs…"
+          placeholder={placeholder}
+          onChange={(e) => setTxtInput(e.target.value)}
+          value={txtInput}
         />
       </TextFieldRoot>
     </div>

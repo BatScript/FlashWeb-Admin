@@ -1,23 +1,28 @@
 const metaDataFormConfig = [
   {
-    placeHolder: 'Enter title of Blog...',
+    placeHolder: 'Enter title of Blog ...',
     keyName: 'title',
     type: 'textField'
   },
   {
-    placeHolder: 'Enter description of Blog...',
+    placeHolder: 'Enter description of Blog ...',
     keyName: 'description',
     type: 'textArea'
   },
   {
-    placeHolder: 'Cover Image URL...',
+    placeHolder: 'Cover Image URL ...',
     keyName: 'coverImg',
     type: 'textField'
   },
   {
-    placeHolder: 'Canonical URL...',
+    placeHolder: 'Canonical URL ...',
     keyName: 'canonical',
     type: 'textField'
+  },
+  {
+    placeHolder: 'Keywords/Tags ...',
+    keyName: 'keyWords',
+    type: 'tabInput'
   }
 ]
 

@@ -6,10 +6,11 @@ import React, { useState } from 'react'
 
 const CreateBlog = () => {
   const [formValue, setFormValue] = useState([])
-  const handleFormChange = (e, valObj) => {
+  const handleFormChange = (valObj) => {
     setFormValue((prev) => ({ ...prev, ...valObj }))
   }
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
     console.log(formValue)
   }
   return (
