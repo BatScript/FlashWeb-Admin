@@ -1,12 +1,26 @@
 import { Button, Container, Text, TextField } from '@radix-ui/themes'
-import { GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
+import { useState } from 'react'
 
 const Authentication = ({ type = 'google' }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const loginSubmitHandler = (e) => {
     e.preventDefault()
     console.log('Submit')
   }
 
+  const handleGAuthSuccess = async (data) => {
+    setIsLoggedIn(true)
+    console.log(data);
+    const decoded = jwtDecode(data?.credential)
+    console.log(decoded)
+  }
+
+  const handleLogout = () => {
+    googleLogout()
+    setIsLoggedIn(false)
+  }
   switch (type) {
     case 'password':
       return (
@@ -46,14 +60,17 @@ const Authentication = ({ type = 'google' }) => {
     default:
       return (
         <div className="p-4 max-w-md mx-auto mt-5 flex flex-col gap-y-2 border rounded-md">
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              console.log(credentialResponse)
-            }}
-            onError={() => {
-              console.log('Login Failed')
-            }}
-          />
+          {!isLoggedIn ? (
+            <GoogleLogin
+              onSuccess={handleGAuthSuccess}
+              onError={() => {
+                console.log('Login Failed')
+              }}
+            />
+          ) : null}
+          {/* {isLoggedIn ? ( */}
+          <Button onClick={handleLogout}>Logout</Button>
+          {/* ) : null} */}
         </div>
       )
   }
